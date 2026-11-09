@@ -1,0 +1,34 @@
+<div class="auth">
+  <div class="auth-form">
+    <div class="auth-box">
+      <h1 class="h1">{{ 'ui.account.login' | translate }}</h1>
+      <p class="lead">{{ 'ui.account.loginLead' | translate }}</p>
+      @if (demo) {
+        <div class="demo-login">
+          <button type="button" class="btn btn-soft btn-block" (click)="entrarDemo(clienteDemo)">{{ 'ui.demo.asClient' | translate }}</button>
+          <button type="button" class="btn btn-soft btn-block" (click)="entrarDemo(adminDemo)">{{ 'ui.demo.asAdmin' | translate }}</button>
+        </div>
+      }
+      <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <label class="field">
+          <span>{{ 'ui.account.email' | translate }}</span>
+          <input class="input" type="email" autocomplete="email" formControlName="correo" />
+          @if (loginForm.get('correo')?.touched) {
+            @if (loginForm.get('correo')?.errors?.['required']) { <small class="error">{{ 'RequiredEmail' | translate }}</small> }
+            @else if (loginForm.get('correo')?.errors?.['email']) { <small class="error">{{ 'InvalidEmail' | translate }}</small> }
+          }
+        </label>
+        <label class="field">
+          <span>{{ 'ui.account.password' | translate }}</span>
+          <input class="input" type="password" autocomplete="current-password" formControlName="contraseña" />
+          @if (loginForm.get('contraseña')?.touched && loginForm.get('contraseña')?.errors?.['required']) {
+            <small class="error">{{ 'RequiredPassword' | translate }}</small>
+          }
+        </label>
+        <button class="btn btn-primary btn-block" type="submit" [disabled]="loginForm.invalid">{{ 'SignIn' | translate }}</button>
+      </form>
+      <p class="auth-alt"><a class="link" routerLink="/register">{{ 'NotRegistered' | translate }}</a></p>
+    </div>
+  </div>
+  <div class="auth-photo"></div>
+</div>

@@ -1,0 +1,39 @@
+<div class="wrap page">
+  <header class="page-head"><h1 class="h1">{{ 'CartTitle' | translate }}</h1></header>
+
+  @if (productosEnCarrito.length > 0) {
+    <div class="layout">
+      <section class="panel">
+        @for (item of productosEnCarrito; track item.producto._id) {
+          <div class="row-item">
+            <button type="button" class="row-shot" (click)="verProducto(item.producto)">
+              <img [src]="item.producto.imagen_url" [alt]="item.producto.nombre" />
+            </button>
+            <div class="row-body">
+              <button type="button" class="h4 name" (click)="verProducto(item.producto)">{{ item.producto.nombre }}</button>
+              <p class="small muted price">{{ item.producto.precio | number: '1.2-2' }} € {{ 'ui.cart.unit' | translate }}</p>
+              @if (item.producto.stock <= 0) { <p class="small out">{{ 'ui.shop.out' | translate }}</p> }
+            </div>
+            <div class="qty">
+              <button type="button" aria-label="-" (click)="eliminarProducto(item)"><i class="fa-solid fa-minus"></i></button>
+              <span>{{ item.cantidad }}</span>
+              <button type="button" aria-label="+" (click)="agregarProducto(item)"><i class="fa-solid fa-plus"></i></button>
+            </div>
+          </div>
+        }
+      </section>
+
+      <aside class="panel summary">
+        <h2 class="h3">{{ 'ui.cart.summary' | translate }}</h2>
+        <p class="line"><span>{{ 'ui.cart.total' | translate }}</span><strong class="price">{{ total | number: '1.2-2' }} €</strong></p>
+        <p class="small muted">{{ 'ui.cart.shipping' | translate }}</p>
+        <button type="button" class="btn btn-primary btn-block" (click)="comprarAhora()">{{ 'BuyNow' | translate }}</button>
+      </aside>
+    </div>
+  } @else {
+    <div class="empty">
+      <p>{{ 'NoProductsInCart' | translate }}</p>
+      <a class="btn btn-primary" routerLink="/catalogo">{{ 'ui.cart.continue' | translate }}</a>
+    </div>
+  }
+</div>

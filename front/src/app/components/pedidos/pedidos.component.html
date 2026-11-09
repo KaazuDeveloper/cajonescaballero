@@ -1,0 +1,41 @@
+<div class="wrap wrap-narrow page">
+  <header class="page-head">
+    <h1 class="h1">{{ 'YourOrders' | translate }}</h1>
+    <p class="lead">{{ 'ui.orders.lead' | translate }}</p>
+  </header>
+  @if (pedidos.length > 0) {
+    @for (pedido of pedidos; track pedido._id) {
+      @if (pedido.estado != 'completado') {
+        <article class="panel">
+          <header class="order-head">
+            <span class="status" [class.ready]="pedido.estado == 'listoParaRecoger'">
+              {{ (pedido.estado == 'listoParaRecoger' ? 'OrderReadyForPickup' : 'OrderPending') | translate }}
+            </span>
+            <strong class="price">{{ pedido | sumPrecio | number: '1.2-2' }} €</strong>
+          </header>
+          @for (producto of pedido.productos; track $index) {
+            <div class="row-item">
+              <div class="row-shot"><img [src]="producto.dataUrl || producto.imagen_url" [alt]="producto.nombre" /></div>
+              <div class="row-body">
+                <p class="h4">{{ producto.dataUrl ? ('CustomCajon' | translate) : producto.nombre }}</p>
+                <p class="small muted price">{{ producto.cantidad }} × {{ producto.precio_unitario | number: '1.2-2' }} €</p>
+                @if (producto.tipo_madera) {
+                  <p class="small muted">{{ 'WoodType' | translate }}: {{ producto.tipo_madera }}</p>
+                }
+                @if (producto.numero_cuerdas) {
+                  <p class="small muted">{{ 'StringType' | translate }}: {{ producto.numero_cuerdas | cuerdas }}</p>
+                }
+              </div>
+            </div>
+          }
+          <p class="small id">{{ pedido._id }}</p>
+        </article>
+      }
+    }
+  } @else {
+    <div class="empty">
+      <p>{{ 'NoOrdersYet' | translate }}</p>
+      <a class="btn btn-primary" routerLink="/catalogo">{{ 'ui.cart.continue' | translate }}</a>
+    </div>
+  }
+</div>

@@ -1,0 +1,39 @@
+<div class="wrap wrap-narrow page">
+  <header class="page-head">
+    <h1 class="h1">{{ 'gestionPedidos' | translate }}</h1>
+  </header>
+  @if (pedidos.length > 0) {
+    @for (pedido of pedidos; track trackByPedidoId($index, pedido)) {
+      <article class="panel">
+        <header class="order-head">
+          <select class="select state" [attr.aria-label]="'Status' | translate" [(ngModel)]="pedido.estado" (change)="cambiarEstadoPedido(pedido)">
+            <option value="pendiente">{{ 'OrderPending' | translate }}</option>
+            <option value="listoParaRecoger">{{ 'OrderReadyForPickup' | translate }}</option>
+            <option value="completado">{{ 'OrderCompleted' | translate }}</option>
+          </select>
+          <strong class="price">{{ pedido | sumPrecio | number: '1.2-2' }} €</strong>
+        </header>
+        @for (producto of pedido.productos; track $index) {
+          <div class="row-item">
+            <div class="row-shot"><img [src]="producto.dataUrl || producto.imagen_url" [alt]="producto.nombre" /></div>
+            <div class="row-body">
+              <p class="h4">{{ producto.dataUrl ? ('CustomCajon' | translate) : producto.nombre }}</p>
+              <p class="small muted price">{{ producto.cantidad }} × {{ producto.precio_unitario | number: '1.2-2' }} €</p>
+              @if (producto.tipo_madera) { <p class="small muted">{{ 'WoodType' | translate }}: {{ producto.tipo_madera }}</p> }
+              @if (producto.numero_cuerdas) { <p class="small muted">{{ 'StringType' | translate }}: {{ producto.numero_cuerdas | cuerdas }}</p> }
+            </div>
+            @if (producto.dataUrl) {
+              <button type="button" class="btn btn-soft btn-sm" (click)="descargarImagen(producto.dataUrl)">{{ 'DownloadImage' | translate }}</button>
+            }
+          </div>
+        }
+        <footer class="order-foot">
+          <span class="small id">{{ pedido._id }}</span>
+          <button type="button" class="btn btn-danger btn-sm" (click)="borrarPedido(pedido._id)">{{ 'DeleteOrder' | translate }}</button>
+        </footer>
+      </article>
+    }
+  } @else {
+    <p class="empty">{{ 'NoOrdersYet' | translate }}</p>
+  }
+</div>

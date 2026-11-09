@@ -1,0 +1,19 @@
+<div class="wrap wrap-narrow page">
+  <h1 class="h1 page-head">{{ 'LegalNotice' | translate }}</h1>
+  <div class="prose">
+    <p><strong>{{ 'Owner' | translate }}</strong> {{ 'OwnerDetails' | translate }}</p>
+    <p><strong>{{ 'Address' | translate }}</strong> {{ 'AddressDetails' | translate }}</p>
+    <p><strong>{{ 'Contact' | translate }}</strong> {{ 'ContactDetails' | translate }}</p>
+    @if (!demo) {
+      <p><strong>{{ 'TaxID' | translate }}</strong> {{ 'TaxIDDetails' | translate }}</p>
+    }
+    <p>{{ 'ResponsibilityDisclaimer' | translate }}</p>
+    <p>{{ 'ThirdPartyLinks' | translate }}</p>
+    <p>{{ 'ContentOwnership' | translate }}</p>
+  </div>
+  <nav class="subnav">
+    <a routerLink="/legal" class="selected">{{ 'LegalNotice' | translate }}</a>
+    <a routerLink="/privacidad">{{ 'PrivacyPolicy' | translate }}</a>
+    <a routerLink="/politica">{{ 'CookiePolicy' | translate }}</a>
+  </nav>
+</div>

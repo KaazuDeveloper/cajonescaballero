@@ -1,0 +1,63 @@
+<div class="wrap page">
+  <header class="page-head">
+    <h1 class="h1">{{ 'ui.home.shopTitle' | translate }}</h1>
+    <p class="lead">{{ 'ui.shop.lead' | translate }}</p>
+  </header>
+
+  <div class="filters">
+    <label class="search">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input class="input" type="search" [placeholder]="'Search' | translate" [(ngModel)]="filtroNombre" (input)="aplicarFiltro()" />
+    </label>
+    <select class="select" [attr.aria-label]="'Categories' | translate" [(ngModel)]="selectedCategory" (ngModelChange)="aplicarFiltro()">
+      <option value="todas">{{ 'All' | translate }}</option>
+      <option value="Instrumentos musicales">{{ 'MusicalInstruments' | translate }}</option>
+      <option value="Accesorio">{{ 'Accessories' | translate }}</option>
+    </select>
+    <select class="select" [attr.aria-label]="'ui.shop.sort' | translate" [(ngModel)]="ordenFecha" (ngModelChange)="aplicarFiltro()">
+      <option value="recientes">{{ 'Recent' | translate }}</option>
+      <option value="antiguos">{{ 'Old' | translate }}</option>
+    </select>
+    <div class="range">
+      <span class="small muted">{{ 'ui.shop.priceRange' | translate }}</span>
+      <input class="input" type="number" min="0" [attr.aria-label]="'From' | translate" [(ngModel)]="minPrice" (ngModelChange)="aplicarFiltro()" />
+      <span class="muted">–</span>
+      <input class="input" type="number" min="0" [attr.aria-label]="'To' | translate" [(ngModel)]="maxPrice" (ngModelChange)="aplicarFiltro()" />
+    </div>
+    <label class="check">
+      <input type="checkbox" id="stock" (change)="aplicarFiltro()" />
+      {{ 'InStock' | translate }}
+    </label>
+  </div>
+
+  @if (productos.length > 0) {
+    <div class="product-grid">
+      @for (producto of getProductosPaginados(); track producto._id) {
+        <article class="product-card">
+          <button type="button" class="view" (click)="verProducto(producto)">
+            <span class="product-shot"><img [src]="producto.imagen_url" [alt]="producto.nombre" loading="lazy" /></span>
+            <span class="product-name">{{ producto.nombre }}</span>
+            <span class="product-meta price">
+              {{ producto.precio | number: '1.2-2' }} €
+              @if (producto.stock <= 0) { · {{ 'ui.shop.out' | translate }} }
+            </span>
+          </button>
+          @if (producto.stock > 0) {
+            <button type="button" class="add" [attr.aria-label]="'AddToCart' | translate" [title]="'AddToCart' | translate" (click)="agregarAlCarrito(producto)">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          }
+        </article>
+      }
+    </div>
+    @if (paginas.length > 1) {
+      <nav class="pager" aria-label="Páginas">
+        @for (numero of paginas; track numero) {
+          <button type="button" [class.on]="numero === page" (click)="irPagina(numero)">{{ numero }}</button>
+        }
+      </nav>
+    }
+  } @else {
+    <p class="empty">{{ 'NoProductsMatch' | translate }}</p>
+  }
+</div>

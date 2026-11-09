@@ -1,0 +1,9 @@
+.gap { margin: -8px 0 14px; }
+.overlay { position: fixed; inset: 0; z-index: 80; display: flex; align-items: center; justify-content: center; padding: 20px; background: rgba(0, 0, 0, .45); }
+.dialog { position: relative; width: 100%; max-width: 400px; padding: 36px 28px 28px; border-radius: 22px; background: #fff; text-align: center; }
+.dialog .muted { margin-top: 6px; }
+.close { position: absolute; top: 14px; right: 14px; width: 32px; height: 32px; border-radius: 50%; background: var(--mist); }
+.digits { display: flex; justify-content: center; gap: 7px; margin-block: 24px; }
+.digits input { width: 44px; height: 54px; border: 1px solid var(--line); border-radius: 12px; text-align: center; font-size: 22px; font-weight: 600; }
+.digits input:focus { outline: 0; border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink); }
+@media (max-width: 380px) { .digits input { width: 38px; } }

@@ -1,0 +1,50 @@
+.studio { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+.work { padding: 14px 20px 20px; border-radius: 22px; background: var(--mist); }
+.bar { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.group { display: flex; align-items: center; gap: 4px; }
+.tool { display: flex; align-items: center; justify-content: center; min-width: 36px; height: 36px; border-radius: 10px; font-size: 14px; color: var(--ink); }
+.tool.text { padding: 0 10px; color: var(--ink-2); }
+.tool:hover:not(:disabled) { background: #e8e8ed; }
+.tool:disabled { color: #c7c7cc; cursor: default; }
+.segmented { display: inline-flex; padding: 2px; border-radius: 10px; background: #e8e8ed; }
+.segmented button { min-width: 38px; height: 32px; padding: 0 12px; border-radius: 8px; font-size: 14px; color: var(--ink-2); }
+.segmented button.on { background: #fff; color: var(--ink); box-shadow: 0 1px 3px rgba(0, 0, 0, .15); }
+.table { display: flex; justify-content: center; align-items: center; gap: 20px; margin-top: 12px; }
+.board { flex: none; border-radius: 6px; overflow: hidden; box-shadow: 0 18px 40px -22px rgba(0, 0, 0, .55), 0 0 0 1px rgba(0, 0, 0, .08); }
+.preview { position: relative; flex: 1; min-width: 0; max-width: 240px; text-align: center; }
+.preview > div { position: relative; height: 300px; }
+.preview p { font-size: 12px; color: var(--ink-3); }
+.selected { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; margin-top: 14px; padding: 10px 14px; border-radius: 14px; background: #fff; }
+.size { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 150px; }
+.side { border: 1px solid #e8e8ed; border-radius: 22px; overflow: hidden; }
+.tabs { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid #e8e8ed; }
+.tabs button { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 12px 2px 10px; font-size: 12px; color: var(--ink-2); box-shadow: inset 0 -2px 0 transparent; }
+.tabs i { font-size: 16px; }
+.tabs button:hover { color: var(--ink); }
+.tabs button.on { color: var(--ink); font-weight: 600; box-shadow: inset 0 -2px 0 var(--ink); }
+.panel-body { padding: 18px; min-height: 420px; }
+.hint { margin-bottom: 14px; font-size: 15px; line-height: 1.35; color: var(--ink-2); }
+.tpl-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.tpl { font-size: 12px; color: var(--ink-2); text-align: center; }
+.tpl svg { display: block; width: 100%; margin-bottom: 5px; border-radius: 9px; background: #e9d6b3; }
+.tpl:hover svg { box-shadow: 0 0 0 2px var(--line); }
+.tpl.on { color: var(--ink); font-weight: 600; }
+.tpl.on svg { box-shadow: 0 0 0 2px var(--ink); }
+.gap { margin-top: 20px; }
+.sub { margin: 16px 0 8px; }
+.combos { display: flex; gap: 10px; margin-top: 10px; }
+.combo { width: 38px; height: 38px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .14); }
+.combo.on { outline: 2px solid var(--ink); outline-offset: 2px; }
+.row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.chip { height: 36px; padding: 0 14px; border-radius: 10px; background: #e8e8ed; font-size: 14px; }
+.chip.on { background: var(--ink); color: #fff; }
+.brush-sample { display: flex; align-items: center; height: 56px; padding: 0 14px; border-radius: 12px; background: var(--mist); }
+.brush-sample span { display: block; width: 100%; border-radius: 99px; }
+.shapes { display: flex; gap: 10px; }
+.shape { display: flex; flex: 1; align-items: center; justify-content: center; height: 72px; border-radius: 14px; background: var(--mist); font-size: 30px; }
+.shape:hover { background: #e8e8ed; }
+.tri { transform: rotate(-90deg); }
+.upload { position: relative; margin-top: 22px; overflow: hidden; cursor: pointer; }
+.upload input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+@media (max-width: 1080px) { .preview { display: none; } }
+@media (max-width: 860px) { .studio { grid-template-columns: 1fr; } .panel-body { min-height: 0; } .work { padding-inline: 14px; } }

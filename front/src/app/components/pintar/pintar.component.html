@@ -1,0 +1,174 @@
+<div class="wrap page">
+  <ol class="steps">
+    <li>1. {{ 'ui.make.stepWood' | translate }}</li>
+    <li class="on">2. {{ 'ui.make.stepDesign' | translate }}</li>
+    <li>3. {{ 'ui.make.stepResult' | translate }}</li>
+  </ol>
+
+  <div class="studio">
+    <section class="work">
+      <div class="bar">
+        <div class="group">
+          <button type="button" class="tool" [disabled]="!puedeDeshacer" [title]="'ui.make.undo' | translate" [attr.aria-label]="'ui.make.undo' | translate" (click)="deshacer()"><i class="fa-solid fa-rotate-left"></i></button>
+          <button type="button" class="tool" [disabled]="!puedeRehacer" [title]="'ui.studio.redo' | translate" [attr.aria-label]="'ui.studio.redo' | translate" (click)="rehacer()"><i class="fa-solid fa-rotate-right"></i></button>
+          <button type="button" class="tool text" (click)="vaciar()">{{ 'ui.studio.clear' | translate }}</button>
+        </div>
+        <div class="segmented" role="group" [attr.aria-label]="'ui.studio.background' | translate">
+          <button type="button" [class.on]="conMadera" (click)="fijarFondo(true)">{{ 'ui.studio.wood' | translate }}</button>
+          <button type="button" [class.on]="!conMadera" (click)="fijarFondo(false)">{{ 'ui.studio.white' | translate }}</button>
+        </div>
+      </div>
+
+      <div class="table">
+        <div class="board"><canvas #canvas></canvas></div>
+        <div class="preview">
+          <div #rendererContainer></div>
+          <p>{{ 'ui.studio.preview' | translate }}</p>
+        </div>
+      </div>
+
+      @if (seleccion) {
+        <div class="selected">
+          <label class="size">
+            <span class="small">{{ 'ui.studio.size' | translate }}</span>
+            <input type="range" min="10" max="300" [(ngModel)]="tamano" (input)="verTamano()" (change)="confirmar()" />
+          </label>
+          <button type="button" class="btn btn-soft btn-sm" (click)="alFrente()">{{ 'ui.studio.front' | translate }}</button>
+          <button type="button" class="btn btn-danger btn-sm" (click)="eliminarSeleccion()">{{ 'ui.studio.delete' | translate }}</button>
+        </div>
+      }
+    </section>
+
+    <section class="side">
+      <div class="tabs" role="tablist">
+        @for (p of pestanas; track p.id) {
+          <button type="button" role="tab" [attr.aria-selected]="pestana === p.id" [class.on]="pestana === p.id" (click)="cambiarPestana(p.id)">
+            <i class="fa-solid" [class]="p.icono"></i>
+            {{ p.clave | translate }}
+          </button>
+        }
+      </div>
+
+      <div class="panel-body">
+        @switch (pestana) {
+          @case ('disenos') {
+            <p class="hint">{{ 'ui.studio.designsHint' | translate }}</p>
+            <div class="tpl-grid">
+              @for (t of plantillas; track t.id) {
+                <button type="button" class="tpl" [class.on]="plantillaActiva === t.id" (click)="aplicarPlantilla(t.id)">
+                  <svg viewBox="0 0 70 100" aria-hidden="true">
+                    @switch (t.id) {
+                      @case ('roseton') {
+                        <circle cx="35" cy="45" r="26" fill="none" [attr.stroke]="colorB" />
+                        <circle cx="35" cy="45" r="16" fill="none" [attr.stroke]="colorA" stroke-width="9" stroke-dasharray="5 3.4" />
+                        <circle cx="35" cy="45" r="4" [attr.fill]="colorB" />
+                      }
+                      @case ('lunares') {
+                        @for (l of lunaresMuestra; track $index) {
+                          <circle [attr.cx]="l[0]" [attr.cy]="l[1]" r="5" [attr.fill]="colorA" />
+                        }
+                      }
+                      @case ('compas') {
+                        <circle cx="35" cy="45" r="24" fill="none" [attr.stroke]="colorB" />
+                        <circle cx="59" cy="45" r="4" [attr.fill]="colorA" />
+                        <circle cx="35" cy="69" r="4" [attr.fill]="colorA" />
+                        <circle cx="14" cy="57" r="4" [attr.fill]="colorA" />
+                        <circle cx="14" cy="33" r="4" [attr.fill]="colorA" />
+                        <circle cx="35" cy="21" r="4" [attr.fill]="colorA" />
+                        <text x="35" y="52" text-anchor="middle" font-family="Times New Roman" font-size="20" [attr.fill]="colorB">12</text>
+                      }
+                      @default {
+                        <text transform="translate(45 50) rotate(-90)" text-anchor="middle" font-family="Times New Roman" font-style="italic" font-size="24" [attr.fill]="colorA">Olé</text>
+                      }
+                    }
+                  </svg>
+                  {{ t.clave | translate }}
+                </button>
+              }
+            </div>
+
+            @if (plantillaActiva === 'nombre') {
+              <label class="field gap">
+                <span>{{ 'ui.studio.nameLabel' | translate }}</span>
+                <input class="input" type="text" maxlength="24" [(ngModel)]="textoPlantilla" (input)="cambiarTextoPlantilla()" (change)="confirmar()" />
+              </label>
+            }
+
+            <h3 class="h4 gap">{{ 'ui.studio.colors' | translate }}</h3>
+            <div class="combos">
+              @for (c of combinaciones; track c[0] + c[1]) {
+                <button type="button" class="combo" [class.on]="colorA === c[0] && colorB === c[1]" [style.background]="'linear-gradient(135deg, ' + c[0] + ' 50%, ' + c[1] + ' 50%)'" [attr.aria-label]="c[0] + ' ' + c[1]" (click)="fijarCombinacion(c)"></button>
+              }
+            </div>
+            <p class="label sub">{{ 'ui.studio.colorMain' | translate }}</p>
+            <app-selector-color [valor]="colorA" (previa)="verColor('a', $event)" (cambio)="fijarColor('a', $event)" />
+            @if (plantillaActiva !== 'lunares' && plantillaActiva !== 'nombre') {
+              <p class="label sub">{{ 'ui.studio.colorSecond' | translate }}</p>
+              <app-selector-color [valor]="colorB" (previa)="verColor('b', $event)" (cambio)="fijarColor('b', $event)" />
+            }
+          }
+
+          @case ('texto') {
+            <p class="hint">{{ 'ui.studio.textHint' | translate }}</p>
+            <div class="field">
+              <span class="label">{{ 'ui.studio.textField' | translate }}</span>
+              <input class="input" type="text" maxlength="60" [(ngModel)]="texto" (input)="alEscribir()" (change)="textoElegido && confirmar()" (keydown.enter)="agregarTexto()" />
+            </div>
+            @if (!textoElegido) {
+              <button type="button" class="btn btn-primary btn-block" [disabled]="!texto.trim()" (click)="agregarTexto()">{{ 'ui.studio.addText' | translate }}</button>
+            }
+            <label class="field gap">
+              <span>{{ 'ui.studio.font' | translate }}</span>
+              <select class="select" [style.font-family]="fuente" [(ngModel)]="fuente" (change)="aplicarATexto()">
+                @for (f of fuentes; track f) {
+                  <option [value]="f" [style.font-family]="f">{{ f }}</option>
+                }
+              </select>
+            </label>
+            <div class="row">
+              <button type="button" class="chip" [class.on]="negrita" [attr.aria-pressed]="negrita" (click)="alternarNegrita()"><b>{{ 'ui.studio.bold' | translate }}</b></button>
+              <div class="segmented">
+                <button type="button" [class.on]="alineacion === 'left'" [attr.aria-label]="'Left' | translate" (click)="fijarAlineacion('left')"><i class="fa-solid fa-align-left"></i></button>
+                <button type="button" [class.on]="alineacion === 'center'" [attr.aria-label]="'Center' | translate" (click)="fijarAlineacion('center')"><i class="fa-solid fa-align-center"></i></button>
+                <button type="button" [class.on]="alineacion === 'right'" [attr.aria-label]="'Right' | translate" (click)="fijarAlineacion('right')"><i class="fa-solid fa-align-right"></i></button>
+              </div>
+            </div>
+            <p class="label sub">{{ 'ui.studio.color' | translate }}</p>
+            <app-selector-color [valor]="colorTexto" (previa)="verColorTexto($event)" (cambio)="fijarColorTexto($event)" />
+          }
+
+          @case ('pincel') {
+            <p class="hint">{{ 'ui.studio.brushHint' | translate }}</p>
+            <p class="label sub">{{ 'ui.studio.color' | translate }}</p>
+            <app-selector-color [valor]="colorPincel" (previa)="fijarColorPincel($event)" (cambio)="fijarColorPincel($event)" />
+            <label class="field gap">
+              <span>{{ 'ui.studio.brushSize' | translate }}</span>
+              <input type="range" min="1" max="40" [(ngModel)]="grosorPincel" (input)="cambiarGrosor()" />
+            </label>
+            <div class="brush-sample"><span [style.height.px]="grosorPincel" [style.background]="colorPincel"></span></div>
+          }
+
+          @case ('anadir') {
+            <p class="hint">{{ 'ui.studio.addHint' | translate }}</p>
+            <div class="shapes">
+              <button type="button" class="shape" aria-label="Círculo" (click)="agregarForma('circulo')"><i class="fa-solid fa-circle" [style.color]="colorForma"></i></button>
+              <button type="button" class="shape" aria-label="Cuadrado" (click)="agregarForma('cuadrado')"><i class="fa-solid fa-square" [style.color]="colorForma"></i></button>
+              <button type="button" class="shape" aria-label="Triángulo" (click)="agregarForma('triangulo')"><i class="fa-solid fa-play tri" [style.color]="colorForma"></i></button>
+            </div>
+            <p class="label sub">{{ 'ui.studio.color' | translate }}</p>
+            <app-selector-color [valor]="colorForma" (previa)="verColorForma($event)" (cambio)="fijarColorForma($event)" />
+            <label class="btn btn-soft btn-block upload">
+              <i class="fa-solid fa-image"></i> {{ 'ui.studio.upload' | translate }}
+              <input type="file" accept="image/*" (change)="alSubirImagen($event)" />
+            </label>
+          }
+        }
+      </div>
+    </section>
+  </div>
+
+  <div class="nav-steps">
+    <button type="button" class="btn btn-soft" (click)="irAEleccion()">{{ 'ui.make.back' | translate }}</button>
+    <button type="button" class="btn btn-primary" (click)="irAVer()">{{ 'ui.make.next' | translate }}</button>
+  </div>
+</div>

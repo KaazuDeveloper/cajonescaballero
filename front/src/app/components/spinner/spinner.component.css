@@ -1,0 +1,3 @@
+.veil { position: fixed; inset: 0; z-index: 90; display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, .55); }
+.ring { width: 30px; height: 30px; border: 2.5px solid #d2d2d7; border-top-color: #1d1d1f; border-radius: 50%; animation: giro .8s linear infinite; }
+@keyframes giro { to { transform: rotate(360deg); } }

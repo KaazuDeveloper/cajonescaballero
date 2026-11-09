@@ -1,0 +1,69 @@
+<header class="nav">
+  <div class="wrap bar">
+    <a class="brand" routerLink="/" (click)="cerrarMenus()">
+      <img src="assets/img/design/marca-clara.svg" alt="" width="18" height="21" />
+      La Caja Caballero
+    </a>
+
+    <nav class="links" aria-label="Principal">
+      @for (enlace of enlaces; track enlace.ruta) {
+        <a [routerLink]="enlace.ruta" [class.on]="activo(enlace.ruta)">{{ enlace.clave | translate }}</a>
+      }
+    </nav>
+
+    <div class="tools">
+      <label class="lang">
+        <span class="sr">{{ 'ui.nav.language' | translate }}</span>
+        <select [value]="idioma" (change)="cambiarIdioma($event)">
+          <option value="es">ES</option>
+          <option value="en">EN</option>
+          <option value="it">IT</option>
+        </select>
+      </label>
+
+      <div class="account">
+        <button type="button" class="tool" [attr.aria-expanded]="cuentaAbierta" [attr.aria-label]="'ui.nav.account' | translate" (click)="alternarCuenta($event)">
+          <i class="fa-regular fa-user"></i>
+        </button>
+        @if (cuentaAbierta) {
+          <div class="menu" (click)="cerrarMenus()">
+            @if (sesionIniciada()) {
+              <a routerLink="/perfil">{{ 'MY_PROFILE' | translate }}</a>
+              <a routerLink="/pedidos">{{ 'MY_ORDERS' | translate }}</a>
+              @if (administrador) {
+                <hr />
+                <a routerLink="/gestionPedidos">{{ 'gestionPedidos' | translate }}</a>
+                <a routerLink="/gestionProductos">{{ 'gestionProductos' | translate }}</a>
+                <a routerLink="/gestionComentarios">{{ 'gestionComentarios' | translate }}</a>
+              }
+              <hr />
+              <button type="button" (click)="cerrarSesion()">{{ 'LOGOUT' | translate }}</button>
+            } @else {
+              <a routerLink="/login">{{ 'LOGIN' | translate }}</a>
+              <a routerLink="/register">{{ 'REGISTER' | translate }}</a>
+            }
+          </div>
+        }
+      </div>
+
+      <a class="tool" routerLink="/carrito" [attr.aria-label]="'ui.nav.cart' | translate" (click)="cerrarMenus()">
+        <i class="fa-solid fa-bag-shopping"></i>
+        @if (totalProductos > 0) {
+          <span class="count">{{ totalProductos }}</span>
+        }
+      </a>
+
+      <button type="button" class="tool burger" [attr.aria-expanded]="menuAbierto" [attr.aria-label]="'ui.nav.menu' | translate" (click)="alternarMenu($event)">
+        <i class="fa-solid" [class.fa-bars]="!menuAbierto" [class.fa-xmark]="menuAbierto"></i>
+      </button>
+    </div>
+  </div>
+
+  @if (menuAbierto) {
+    <nav class="drawer" (click)="cerrarMenus()">
+      @for (enlace of enlaces; track enlace.ruta) {
+        <a [routerLink]="enlace.ruta">{{ enlace.clave | translate }}</a>
+      }
+    </nav>
+  }
+</header>

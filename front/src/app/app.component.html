@@ -1,0 +1,11 @@
+<app-header />
+@if (demo) {
+  <p class="demo-note">{{ 'ui.demo.banner' | translate }}</p>
+}
+<main>
+  <router-outlet />
+</main>
+<app-footer />
+@if (cargando$ | async) {
+  <app-spinner />
+}

@@ -1,0 +1,13 @@
+{
+  "name": "cajones-caballero",
+  "private": true,
+  "scripts": {
+    "install:all": "npm --prefix back ci && npm --prefix front ci --legacy-peer-deps --ignore-scripts",
+    "test": "npm --prefix back test",
+    "dev": "concurrently -n back,front -c blue,green \"npm --prefix back run dev\" \"npm --prefix front start\"",
+    "demo": "concurrently -n demo,front -c blue,green \"npm --prefix back run demo\" \"npm --prefix front start\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0"
+  }
+}

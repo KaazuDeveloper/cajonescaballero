@@ -1,0 +1,12 @@
+.intro-in { display: grid; grid-template-columns: 1.1fr 1fr; align-items: center; gap: 64px; padding-block: 72px; }
+.intro .lead { margin-top: 20px; }
+.intro img { width: 100%; max-height: 640px; object-fit: cover; border-radius: 24px; }
+.center { text-align: center; }
+.center .lead { margin-top: 16px; }
+.center-title { text-align: center; margin-bottom: 44px; }
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.cards article { padding-bottom: 8px; }
+.cards img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 20px; margin-bottom: 18px; }
+.cards img.player { object-position: 72% center; }
+.cards p { margin-top: 6px; }
+@media (max-width: 860px) { .intro-in { grid-template-columns: 1fr; gap: 32px; padding-block: 48px; } .cards { grid-template-columns: 1fr; gap: 32px; } .cards img { aspect-ratio: 5 / 4; } }

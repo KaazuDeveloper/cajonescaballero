@@ -1,0 +1,87 @@
+<div class="auth">
+  <div class="auth-form">
+    <div class="auth-box">
+      <h1 class="h1">{{ 'ui.account.register' | translate }}</h1>
+      <p class="lead">{{ 'ui.account.registerLead' | translate }}</p>
+      <form [formGroup]="registerForm" (ngSubmit)="sendVerificationEmail()">
+        <label class="field">
+          <span>{{ 'ui.account.name' | translate }}</span>
+          <input class="input" type="text" autocomplete="name" formControlName="nombre" />
+          @if (registerForm.get('nombre')?.touched && registerForm.get('nombre')?.errors?.['required']) {
+            <small class="error">{{ 'registration.nameRequired' | translate }}</small>
+          }
+        </label>
+        <label class="field">
+          <span>{{ 'ui.account.email' | translate }}</span>
+          <input class="input" type="email" autocomplete="email" formControlName="correo" />
+          @if (registerForm.get('correo')?.touched) {
+            @if (registerForm.get('correo')?.errors?.['required']) { <small class="error">{{ 'registration.emailRequired' | translate }}</small> }
+            @else if (registerForm.get('correo')?.errors?.['email']) { <small class="error">{{ 'registration.emailInvalid' | translate }}</small> }
+          }
+        </label>
+        <div class="grid-2">
+          <label class="field">
+            <span>{{ 'ui.account.password' | translate }}</span>
+            <input class="input" type="password" autocomplete="new-password" formControlName="contraseña" />
+          </label>
+          <label class="field">
+            <span>{{ 'ui.account.repeat' | translate }}</span>
+            <input class="input" type="password" autocomplete="new-password" formControlName="repetirContrasenia" />
+          </label>
+        </div>
+        @if (registerForm.get('contraseña')?.touched) {
+          @if (registerForm.get('contraseña')?.errors?.['required']) {
+            <small class="error gap">{{ 'registration.passwordRequired' | translate }}</small>
+          } @else if (registerForm.get('contraseña')?.errors?.['invalidPassword']) {
+            <small class="error gap">
+              {{ 'registration.passwordInvalid' | translate }}
+              <ul>
+                <li>{{ 'registration.passwordCriteria.lowercase' | translate }}</li>
+                <li>{{ 'registration.passwordCriteria.uppercase' | translate }}</li>
+                <li>{{ 'registration.passwordCriteria.digit' | translate }}</li>
+                <li>{{ 'registration.passwordCriteria.length' | translate }}</li>
+              </ul>
+            </small>
+          }
+        }
+        @if (registerForm.get('repetirContrasenia')?.touched && registerForm.get('repetirContrasenia')?.errors?.['passwordMismatch']) {
+          <small class="error gap">{{ 'registration.repeatPasswordMismatch' | translate }}</small>
+        }
+        <label class="field">
+          <span>{{ 'ui.account.address' | translate }}</span>
+          <input class="input" type="text" autocomplete="street-address" formControlName="direccion" />
+          @if (registerForm.get('direccion')?.touched && registerForm.get('direccion')?.errors?.['required']) {
+            <small class="error">{{ 'registration.addressRequired' | translate }}</small>
+          }
+        </label>
+        <label class="field">
+          <span>{{ 'ui.account.phone' | translate }}</span>
+          <input class="input" type="tel" autocomplete="tel" formControlName="telefono" />
+          @if (registerForm.get('telefono')?.touched) {
+            @if (registerForm.get('telefono')?.errors?.['required']) { <small class="error">{{ 'registration.phoneRequired' | translate }}</small> }
+            @else if (registerForm.get('telefono')?.errors?.['invalidNumber']) { <small class="error">{{ 'registration.phoneInvalid' | translate }}</small> }
+          }
+        </label>
+        <button class="btn btn-primary btn-block" type="submit">{{ 'registration.registerButton' | translate }}</button>
+      </form>
+      <p class="auth-alt"><a class="link" routerLink="/login">{{ 'registration.haveAccount' | translate }}</a></p>
+    </div>
+  </div>
+  <div class="auth-photo"></div>
+</div>
+
+@if (showModal) {
+  <div class="overlay">
+    <div class="dialog" role="dialog" aria-modal="true">
+      <button type="button" class="close" aria-label="Cerrar" (click)="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+      <h2 class="h3">{{ 'verificationCode.title' | translate }}</h2>
+      <p class="muted">{{ (demo ? 'ui.demo.code' : 'ui.account.code') | translate }}</p>
+      <div class="digits">
+        @for (n of [1, 2, 3, 4, 5, 6]; track n) {
+          <input [id]="'input' + n" type="text" inputmode="numeric" maxlength="1" aria-label="Dígito" (input)="moveToNext($event, n)" />
+        }
+      </div>
+      <button type="button" class="btn btn-primary btn-block" (click)="confirmVerificationCode()">{{ 'verificationCode.verifyButton' | translate }}</button>
+    </div>
+  </div>
+}

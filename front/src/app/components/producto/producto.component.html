@@ -1,0 +1,51 @@
+@if (producto; as p) {
+  <div class="wrap page">
+    <a class="link back" routerLink="/catalogo"><i class="fa-solid fa-chevron-left"></i> {{ 'ui.home.shopTitle' | translate }}</a>
+
+    <div class="detail">
+      <div class="shot"><img [src]="p.imagen_url" [alt]="p.nombre" /></div>
+      <div class="info">
+        @if (nombreMarca) { <p class="eyebrow">{{ nombreMarca }}</p> }
+        <h1 class="h1">{{ p.nombre }}</h1>
+        <p class="amount price">{{ p.precio | number: '1.2-2' }} €</p>
+        <p class="lead">{{ p.descripcion }}</p>
+        <p class="status avail" [class.ready]="p.stock > 0">
+          {{ (p.stock > 0 ? 'ui.product.stock' : 'ui.product.unavailable') | translate }}
+        </p>
+        <div class="buy">
+          @if (loginService.isAuthenticated()) {
+            @if (p.stock > 0) {
+              <button type="button" class="btn btn-primary btn-block" (click)="comprar(p)">{{ 'BuyNow' | translate }}</button>
+              <button type="button" class="btn btn-outline btn-block" (click)="agregarAlCarrito(p)">{{ 'AddToCart' | translate }}</button>
+            }
+          } @else {
+            <a class="btn btn-primary btn-block" routerLink="/login">{{ 'ui.product.login' | translate }}</a>
+          }
+        </div>
+      </div>
+    </div>
+
+    <section class="opinions">
+      <h2 class="h2">{{ 'ui.product.opinions' | translate }}</h2>
+      @if (loginService.isAuthenticated()) {
+        <div class="write">
+          <input class="input" type="text" [placeholder]="'WriteComment' | translate" [(ngModel)]="nuevoComentario" (keydown.enter)="enviarComentario()" />
+          <button type="button" class="btn btn-primary" (click)="enviarComentario()">{{ 'ui.product.send' | translate }}</button>
+        </div>
+      }
+      @if (comentarios && comentarios.length > 0) {
+        <ul>
+          @for (comentario of comentarios; track $index) {
+            <li>
+              <p class="h4">{{ comentario.nombreUsuario }}</p>
+              <p class="muted">{{ comentario.texto }}</p>
+              <p class="small muted when">{{ comentario.fecha | date }}</p>
+            </li>
+          }
+        </ul>
+      } @else {
+        <p class="muted none">{{ 'NoCommentsYet' | translate }}</p>
+      }
+    </section>
+  </div>
+}

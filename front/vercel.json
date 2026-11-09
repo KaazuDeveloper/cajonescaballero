@@ -1,0 +1,12 @@
+{
+  "framework": null,
+  "installCommand": "npm ci --legacy-peer-deps --ignore-scripts",
+  "buildCommand": "npm run build:demo",
+  "outputDirectory": "dist/tfgpage/browser",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}

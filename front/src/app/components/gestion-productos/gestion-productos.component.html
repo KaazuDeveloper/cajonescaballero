@@ -1,0 +1,69 @@
+<div class="wrap wrap-narrow page">
+  <header class="page-head">
+    <h1 class="h1">{{ 'gestionProductos' | translate }}</h1>
+    <p class="lead">{{ 'ProductDetails' | translate }}</p>
+  </header>
+  <form class="panel" [formGroup]="productoForm" (ngSubmit)="onSubmit()">
+    <label class="field">
+      <span>{{ 'ProductName' | translate }}</span>
+      <input class="input" type="text" formControlName="nombre" />
+      @if (productoForm.get('nombre')?.touched && productoForm.get('nombre')?.errors?.['required']) {
+        <small class="error">{{ 'RequiredName' | translate }}</small>
+      }
+    </label>
+    <label class="field">
+      <span>{{ 'Description' | translate }}</span>
+      <input class="input" type="text" formControlName="descripcion" />
+      @if (productoForm.get('descripcion')?.touched && productoForm.get('descripcion')?.errors?.['required']) {
+        <small class="error">{{ 'RequiredDescription' | translate }}</small>
+      }
+    </label>
+    <label class="field">
+      <span>{{ 'Price' | translate }}</span>
+      <input class="input" type="number" formControlName="precio" />
+      @if (productoForm.get('precio')?.touched && productoForm.get('precio')?.errors?.['required']) {
+        <small class="error">{{ 'RequiredPrice' | translate }}</small>
+      }
+    </label>
+    <label class="field">
+      <span>{{ 'Stock' | translate }}</span>
+      <input class="input" type="number" formControlName="stock" />
+      @if (productoForm.get('stock')?.touched && productoForm.get('stock')?.errors?.['required']) {
+        <small class="error">{{ 'RequiredStock' | translate }}</small>
+      }
+    </label>
+    <div class="grid-2">
+      <label class="field">
+        <span>{{ 'Brand' | translate }}</span>
+        <select class="select" formControlName="marca_id">
+          <option value="">{{ 'SelectBrand' | translate }}</option>
+          @for (marca of marcas; track marca._id) {
+            <option [value]="marca._id">{{ marca.nombre }}</option>
+          }
+        </select>
+      @if (productoForm.get('marca_id')?.touched && productoForm.get('marca_id')?.errors?.['required']) {
+        <small class="error">{{ 'RequiredBrandID' | translate }}</small>
+      }
+      </label>
+      <label class="field">
+        <span>{{ 'Category' | translate }}</span>
+        <select class="select" formControlName="categoria">
+          <option value="">{{ 'SelectCategory' | translate }}</option>
+          <option value="Instrumentos musicales">{{ 'Instrumentosmusicales' | translate }}</option>
+          <option value="Accesorio">{{ 'Accesorio' | translate }}</option>
+        </select>
+      @if (productoForm.get('categoria')?.touched && productoForm.get('categoria')?.errors?.['required']) {
+        <small class="error">{{ 'RequiredCategory' | translate }}</small>
+      }
+      </label>
+    </div>
+    <label class="field">
+      <span>{{ 'Image' | translate }}</span>
+      <input type="file" accept="image/*" (change)="onFileChange($event)" />
+      @if (productoForm.get('imagen_url')?.touched && productoForm.get('imagen_url')?.errors?.['required']) {
+        <small class="error">{{ 'RequiredImage' | translate }}</small>
+      }
+    </label>
+    <button type="submit" class="btn btn-primary">{{ 'AddProduct' | translate }}</button>
+  </form>
+</div>

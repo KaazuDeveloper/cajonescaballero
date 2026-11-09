@@ -1,0 +1,32 @@
+<div class="wrap page">
+  <ol class="steps">
+    <li>1. {{ 'ui.make.stepWood' | translate }}</li>
+    <li>2. {{ 'ui.make.stepDesign' | translate }}</li>
+    <li class="on">3. {{ 'ui.make.stepResult' | translate }}</li>
+  </ol>
+  <div class="maker result">
+    <div>
+      <h1 class="h1">{{ 'CongratulationsCustomCajon' | translate }}</h1>
+      <p class="amount price">{{ 'ui.make.price' | translate }}</p>
+      <p class="lead">{{ 'ui.make.priceNote' | translate }}</p>
+      <div class="buy">
+        @if (sesion.isAuthenticated()) {
+          <button type="button" class="btn btn-primary btn-block" (click)="comprar()">{{ 'BuyNow' | translate }}</button>
+        } @else {
+          <a class="btn btn-primary btn-block" routerLink="/login">{{ 'ui.product.login' | translate }}</a>
+        }
+        <button type="button" class="btn btn-outline btn-block" (click)="descargar()">{{ 'DownloadDesign' | translate }}</button>
+      </div>
+      <button type="button" class="link edit" (click)="irAVer()"><i class="fa-solid fa-chevron-left"></i> {{ 'ui.make.design' | translate }}</button>
+    </div>
+    <div>
+      <div class="stage tall"><div #rendererContainer></div><p class="stage-hint">{{ 'ui.make.hintPlay' | translate }}</p></div>
+      <div class="view-tools">
+        <button type="button" class="btn btn-soft btn-sm" [attr.aria-label]="'ZoomIn' | translate" (click)="zoomIn()"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
+        <button type="button" class="btn btn-soft btn-sm" [attr.aria-label]="'ZoomOut' | translate" (click)="zoomOut()"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
+        <button type="button" class="btn btn-soft btn-sm" [attr.aria-label]="'MoveUp' | translate" (click)="goUp()"><i class="fa-solid fa-arrow-up"></i></button>
+        <button type="button" class="btn btn-soft btn-sm" [attr.aria-label]="'MoveDown' | translate" (click)="goDown()"><i class="fa-solid fa-arrow-down"></i></button>
+      </div>
+    </div>
+  </div>
+</div>

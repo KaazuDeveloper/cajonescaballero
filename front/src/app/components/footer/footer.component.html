@@ -1,0 +1,32 @@
+<footer class="foot">
+  <div class="wrap">
+    <div class="cols">
+      <div class="about">
+        <p class="h4">La Caja Caballero</p>
+        <p class="small muted">{{ 'ui.footer.tagline' | translate }}</p>
+      </div>
+      <nav>
+        <p class="small head">{{ 'ui.footer.shop' | translate }}</p>
+        <a routerLink="/catalogo">{{ 'ui.nav.shop' | translate }}</a>
+        <a routerLink="/personalizar">{{ 'ui.nav.make' | translate }}</a>
+        <a routerLink="/tutoriales">{{ 'ui.nav.learn' | translate }}</a>
+        <a routerLink="/sobreNosotros">{{ 'ui.nav.about' | translate }}</a>
+      </nav>
+      <nav>
+        <p class="small head">{{ 'ui.footer.legal' | translate }}</p>
+        <a routerLink="/legal">{{ 'LegalNotice' | translate }}</a>
+        <a routerLink="/privacidad">{{ 'PrivacyPolicy' | translate }}</a>
+        <a routerLink="/politica">{{ 'CookiePolicy' | translate }}</a>
+      </nav>
+      <nav>
+        <p class="small head">{{ 'ui.footer.follow' | translate }}</p>
+        <a href="https://www.instagram.com/lacajacaballero/" target="_blank" rel="noreferrer">Instagram</a>
+        <a href="https://twitter.com/LaCajaCaballero" target="_blank" rel="noreferrer">X</a>
+      </nav>
+    </div>
+    <div class="legal small muted">
+      <span>© {{ anio }} La Caja Caballero</span>
+      <span>{{ 'ui.footer.credit' | translate }} <a href="https://juancaballero.vercel.app" target="_blank" rel="noreferrer">Juan Caballero</a></span>
+    </div>
+  </div>
+</footer>

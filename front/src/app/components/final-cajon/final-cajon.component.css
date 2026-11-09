@@ -1,0 +1,8 @@
+.result { align-items: center; }
+.amount { margin-top: 18px; font-size: 28px; font-weight: 500; letter-spacing: -0.02em; }
+.result .lead { margin-top: 6px; }
+.buy { display: grid; gap: 10px; margin-top: 28px; max-width: 340px; }
+.edit { margin-top: 22px; font-size: 15px; }
+.tall { height: 560px; }
+.view-tools { display: flex; justify-content: center; gap: 8px; margin-top: 12px; }
+@media (max-width: 720px) { .tall { height: 420px; } .buy { max-width: none; } }

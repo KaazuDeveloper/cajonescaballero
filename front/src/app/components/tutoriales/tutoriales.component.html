@@ -1,0 +1,62 @@
+<div class="wrap page">
+  <header class="page-head">
+    <h1 class="h1">{{ 'tutorials.title' | translate }}</h1>
+    <p class="lead">{{ 'tutorials.description' | translate }}</p>
+  </header>
+
+  <section class="level">
+    <h2 class="h3">{{ 'tutorials.basicTitle' | translate }} {{ 'tutorials.basicHighlight' | translate }}</h2>
+    <ul class="rail">
+      @for (video of tutorialesFaciles; track video.id) {
+        <li>
+          <a [href]="video.url" target="_blank" rel="noreferrer">
+            <span class="thumb"><img [src]="getYoutubeThumbnail(video.id)" [alt]="video.title" loading="lazy" /><i class="fa-solid fa-play"></i></span>
+            <span class="title">{{ video.title }}</span>
+          </a>
+        </li>
+      }
+    </ul>
+  </section>
+
+  <section class="level">
+    <h2 class="h3">{{ 'tutorials.intermediateTitle' | translate }} {{ 'tutorials.intermediateHighlight' | translate }}</h2>
+    <ul class="rail">
+      @for (video of tutorialesMedios; track video.id) {
+        <li>
+          <a [href]="video.url" target="_blank" rel="noreferrer">
+            <span class="thumb"><img [src]="getYoutubeThumbnail(video.id)" [alt]="video.title" loading="lazy" /><i class="fa-solid fa-play"></i></span>
+            <span class="title">{{ video.title }}</span>
+          </a>
+        </li>
+      }
+    </ul>
+  </section>
+
+  <section class="level">
+    <h2 class="h3">{{ 'tutorials.advancedTitle' | translate }} {{ 'tutorials.advancedHighlight' | translate }}</h2>
+    <ul class="rail">
+      @for (video of tutorialesAvanzados; track video.id) {
+        <li>
+          <a [href]="video.url" target="_blank" rel="noreferrer">
+            <span class="thumb"><img [src]="getYoutubeThumbnail(video.id)" [alt]="video.title" loading="lazy" /><i class="fa-solid fa-play"></i></span>
+            <span class="title">{{ video.title }}</span>
+          </a>
+        </li>
+      }
+    </ul>
+  </section>
+
+  <section class="level">
+    <h2 class="h3">{{ 'tutorials.funTitle' | translate }} {{ 'tutorials.funHighlight' | translate }}</h2>
+    <ul class="rail">
+      @for (video of tutorialesDivertidos; track video.id) {
+        <li>
+          <a [href]="video.url" target="_blank" rel="noreferrer">
+            <span class="thumb"><img [src]="getYoutubeThumbnail(video.id)" [alt]="video.title" loading="lazy" /><i class="fa-solid fa-play"></i></span>
+            <span class="title">{{ video.title }}</span>
+          </a>
+        </li>
+      }
+    </ul>
+  </section>
+</div>

@@ -1,0 +1,105 @@
+<section class="hero bg-night">
+  <div class="wrap hero-in">
+    <div class="hero-copy">
+      <p class="eyebrow">{{ 'ui.home.eyebrow' | translate }}</p>
+      <h1 class="display">{{ 'ui.home.title1' | translate }}<br />{{ 'ui.home.title2' | translate }}</h1>
+      <p class="lead">{{ 'ui.home.text' | translate }}</p>
+      <div class="actions">
+        <a class="btn btn-light" routerLink="/personalizar">{{ 'ui.home.ctaMake' | translate }}</a>
+        <a class="link" routerLink="/catalogo">{{ 'ui.home.ctaShop' | translate }} <i class="fa-solid fa-chevron-right"></i></a>
+      </div>
+    </div>
+    <div class="hero-stage">
+      <div #rendererContainer class="hero-canvas"></div>
+      <p class="hint small">{{ 'ui.make.hintPlay' | translate }}</p>
+    </div>
+  </div>
+</section>
+
+@if (cuatroProductos?.length) {
+  <section class="section">
+    <div class="wrap">
+      <div class="head-row">
+        <h2 class="h2">{{ 'ui.home.shopTitle' | translate }}</h2>
+        <a class="link" routerLink="/catalogo">{{ 'ui.home.shopAll' | translate }} <i class="fa-solid fa-chevron-right"></i></a>
+      </div>
+      <div class="product-grid four">
+        @for (producto of cuatroProductos; track producto._id) {
+          <button type="button" class="product-card" (click)="irProducto(producto)">
+            <span class="product-shot"><img [src]="producto.imagen_url" [alt]="producto.nombre" loading="lazy" /></span>
+            <span class="product-name">{{ producto.nombre }}</span>
+            <span class="product-meta price">{{ producto.precio | number: '1.2-2' }} €</span>
+          </button>
+        }
+      </div>
+    </div>
+  </section>
+}
+
+<section class="section bg-mist">
+  <div class="wrap make">
+    <div>
+      <p class="eyebrow">{{ 'ui.home.makeEyebrow' | translate }}</p>
+      <h2 class="h2">{{ 'ui.home.makeTitle' | translate }}</h2>
+      <p class="lead make-text">{{ 'ui.home.makeText' | translate }}</p>
+      <ol class="make-steps">
+        <li><span>1</span>{{ 'ui.make.stepWood' | translate }}</li>
+        <li><span>2</span>{{ 'ui.make.stepDesign' | translate }}</li>
+        <li><span>3</span>{{ 'ui.make.stepResult' | translate }}</li>
+      </ol>
+      <a class="btn btn-primary" routerLink="/personalizar">{{ 'ui.home.ctaMake' | translate }}</a>
+    </div>
+    <ul class="woods">
+      @for (madera of maderas; track madera.value) {
+        <li>
+          <img [src]="madera.imagen" [alt]="madera.label" loading="lazy" />
+          <span class="small">{{ madera.label }}</span>
+        </li>
+      }
+    </ul>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap tiles">
+    <a class="tile" routerLink="/tutoriales">
+      <img src="assets/img/design/3.jpg" alt="" loading="lazy" class="pos-player" />
+      <div class="tile-copy">
+        <p class="eyebrow">{{ 'ui.nav.learn' | translate }}</p>
+        <h2 class="h3">{{ 'ui.home.learnTitle' | translate }}</h2>
+        <p>{{ 'ui.home.learnText' | translate }}</p>
+      </div>
+    </a>
+    <a class="tile" routerLink="/sobreNosotros">
+      <img src="assets/img/design/juan.jpg" alt="" loading="lazy" />
+      <div class="tile-copy">
+        <p class="eyebrow">{{ 'ui.home.workshop' | translate }}</p>
+        <h2 class="h3">{{ 'ui.home.workshopTitle' | translate }}</h2>
+        <p>{{ 'ui.home.workshopText' | translate }}</p>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section class="section bg-mist" id="ayuda">
+  <div class="wrap wrap-narrow">
+    <h2 class="h2 faq-title">{{ 'ui.home.helpTitle' | translate }}</h2>
+    <details>
+      <summary>{{ 'ShippingTime' | translate }}</summary>
+      <p>{{ 'ShippingTimeInfo' | translate }}</p>
+    </details>
+    <details>
+      <summary>{{ 'ContactCustomerService' | translate }}</summary>
+      <p>{{ 'ContactCustomerServiceInfo' | translate }}</p>
+    </details>
+    <details>
+      <summary>{{ 'ReturnPolicy' | translate }}</summary>
+      <p>{{ 'ReturnPolicyInfo' | translate }}</p>
+    </details>
+    <details>
+      <summary>{{ 'TermsAndConditions' | translate }}</summary>
+      <p>{{ 'TermsAndConditionsInfo' | translate }}</p>
+      <p>{{ 'TermsUpdateNotice' | translate }}</p>
+    </details>
+  </div>
+</section>

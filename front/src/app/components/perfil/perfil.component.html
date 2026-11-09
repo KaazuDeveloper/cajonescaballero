@@ -1,0 +1,31 @@
+<div class="wrap wrap-narrow page">
+  <header class="page-head">
+    <h1 class="h1">{{ 'UserProfile' | translate }}</h1>
+    <p class="lead">{{ 'ui.account.profileLead' | translate }}</p>
+  </header>
+  <form class="panel" [formGroup]="perfilForm" (ngSubmit)="onSubmit()">
+    <label class="field">
+      <span>{{ 'Name' | translate }}</span>
+      <input class="input" type="text" formControlName="nombre" />
+      @if (perfilForm.get('nombre')?.touched && perfilForm.get('nombre')?.errors?.['required']) {
+        <small class="error">{{ 'RequiredName' | translate }}</small>
+      }
+    </label>
+    <label class="field">
+      <span>{{ 'Address' | translate }}</span>
+      <input class="input" type="text" formControlName="direccion" />
+      @if (perfilForm.get('direccion')?.touched && perfilForm.get('direccion')?.errors?.['required']) {
+        <small class="error">{{ 'RequiredAddress' | translate }}</small>
+      }
+    </label>
+    <label class="field">
+      <span>{{ 'PhoneNumber' | translate }}</span>
+      <input class="input" type="tel" formControlName="telefono" />
+      @if (perfilForm.get('telefono')?.touched) {
+        @if (perfilForm.get('telefono')?.errors?.['required']) { <small class="error">{{ 'RequiredPhoneNumber' | translate }}</small> }
+        @else if (perfilForm.get('telefono')?.errors?.['invalidNumber']) { <small class="error">{{ 'InvalidPhoneNumber' | translate }}</small> }
+      }
+    </label>
+    <button type="submit" class="btn btn-primary">{{ 'SaveChanges' | translate }}</button>
+  </form>
+</div>

@@ -1,0 +1,33 @@
+<div class="wrap page">
+  <ol class="steps">
+    <li class="on">1. {{ 'ui.make.stepWood' | translate }}</li>
+    <li>2. {{ 'ui.make.stepDesign' | translate }}</li>
+    <li>3. {{ 'ui.make.stepResult' | translate }}</li>
+  </ol>
+  <div class="maker">
+    <div class="stage"><div #rendererContainer></div><p class="stage-hint">{{ 'ui.make.hintPlay' | translate }}</p></div>
+    <div>
+      <h1 class="h2">{{ 'ui.make.chooseTitle' | translate }}</h1>
+      <p class="label choose">{{ 'SelectWoodType' | translate }}</p>
+      <div class="wood-grid">
+        @for (madera of tiposMadera; track madera.value) {
+          <label class="wood-option" [class.sel]="tipoMadera === madera.value">
+            <input type="radio" name="tipoMadera" [value]="madera.value" [(ngModel)]="tipoMadera" (change)="actualizarCajon(madera.value)" />
+            <img [src]="madera.imagen" [alt]="madera.label" />
+            {{ madera.label }}
+          </label>
+        }
+      </div>
+      <label class="field strings">
+        <span>{{ 'SelectStringType' | translate }}</span>
+        <select class="select" [(ngModel)]="tipoCuerdas">
+          <option value="sin-cuerdas">{{ 'NoStrings' | translate }}</option>
+          <option value="una-cuerda-central">{{ 'OneCentralString' | translate }}</option>
+          <option value="dos-cuerdas-v">{{ 'TwoStringsV' | translate }}</option>
+          <option value="varias-cuerdas">{{ 'SeveralStrings' | translate }}</option>
+        </select>
+      </label>
+      <button type="button" class="btn btn-primary btn-block" (click)="irAPintar()">{{ 'ui.make.next' | translate }}</button>
+    </div>
+  </div>
+</div>
